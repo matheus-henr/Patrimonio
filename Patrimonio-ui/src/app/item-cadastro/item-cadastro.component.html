@@ -1,0 +1,56 @@
+<div class="ui-g">
+  <form #frm="ngForm" (ngSubmit)="adicionar(frm)">
+    <div ngModelGroup="item">
+      <div class="ui-g-12">
+        <h1>Gestão de Patrimonio</h1>
+      </div>
+      <div class="ui-g-6 ui-fluid">
+        <label>Etiqueta</label>
+        <p-inputMask name="etiqueta" mask="aa9999"
+          ngModel [required]="true"></p-inputMask>
+      </div>
+  
+      <div class="ui-g-6 ui-fluid">
+        <label>Data da aquisição</label>
+        <p-calendar name="dataAquisicao" dateFormat="dd/mm/yy"
+          ngModel [required]="true"></p-calendar>
+      </div>
+  
+      <div class="ui-g-12 ui-fluid">
+        <label>Descrição</label>
+        <input pInputText name="descricao"
+          ngModel [required]="true">
+      </div>
+  
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Adicionar"
+          [disabled]="frm.invalid"></button>
+      </div>
+      
+
+      
+    </div>
+
+
+    <div class="ui-g-12">
+      <p-dataTable [value]="itens">
+        <p-column field="etiqueta" header="Etiqueta"></p-column>
+        <p-column field="descricao" header="Descrição"></p-column>
+        <p-column header="Aquisição">
+          <ng-template pTemplate="body" let-item="rowData">
+            {{ item.dataAquisicao | date:'dd/MM/yyyy' }}
+          </ng-template>
+        </p-column>
+        <p-column header="Opção">
+          <ng-template pTemplate="body" let-item="rowData">
+            <div class="ui-g-6">
+              <button type="button" (click)="apagar([item.id])" pButton icon="fa-remove"></button>
+              <button type="button" (click)="editar([item.id],frm)" pButton icon="fa-edit"></button>
+            </div>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+    </div>
+  </form>
+</div>
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>
